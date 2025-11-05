@@ -12,7 +12,7 @@ describe('Apply Leave in OrangeHRM', () => {
     cy.get('i.bi-chevron-left').click().wait(1000);
 
     cy.get('label').contains('Leave Type').parent().next().click().wait(1000);
-   cy.get('.oxd-select-text-input').first().click().wait(1000);
+   cy.get('.oxd-select-text-input').first().click().wait(1000);  // dynamic
     // cy.get('.select').contains('CAN - FMLA').click();
 
     const startDateInput = cy.get('input[placeholder="yyyy-dd-mm"]').first().wait(1000);
