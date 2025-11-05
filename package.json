@@ -19,7 +19,6 @@
     "dotenv": "^17.2.3",
     "mochawesome": "^7.1.4",
     "mochawesome-merge": "^5.0.0",
-    "mochawesome-report-generator": "^6.3.1"
+    "mochawesome-report-generator": "^6.2.0"
   }
-  
 }
