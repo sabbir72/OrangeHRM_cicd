@@ -29,11 +29,22 @@ jobs:
       - name: Verify Cypress cache
         run: npx cypress verify
 
-      # Step 5: Run Cypress Tests in Headless Chrome
-      - name: Run Cypress tests
-        run: npx cypress run --browser chrome --headless
+      # Step 5: Clean old reports (avoid corrupted JSON merge)
+      - name: Clean old reports
+        run: rm -rf cypress/reports && mkdir -p cypress/reports
 
-      # Step 6: Save Cypress screenshots/videos for debugging (always upload, even if failed)
+      # Step 6: Run Cypress Tests with Mochawesome reporter
+      - name: Run Cypress tests with Mochawesome
+        run: npm run cypress:run
+
+      # Step 7: Merge and Generate HTML Report
+      - name: Merge and Generate Mochawesome HTML Report
+        if: always()
+        run: |
+          npm run merge:reports
+          npm run generate:html
+
+      # Step 8: Upload Cypress Artifacts (Screenshots, Videos, Reports)
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
@@ -44,20 +55,10 @@ jobs:
             cypress/videos
             cypress/reports
 
-      # Step 7: Run Cypress with Mochawesome report
-      - name: Run Cypress with Mochawesome report
-        run: npm run cypress:report
-
-      - name: Merge and generate HTML report
-        if: always()
-        run: |
-          npm run merge:reports
-          npm run generate:html
-
+      # Step 9: Upload Final HTML Report (for easy access)
       - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-html-report
           path: cypress/reports/html/
-                    
