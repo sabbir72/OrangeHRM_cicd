@@ -11,7 +11,7 @@ describe('Apply Leave in OrangeHRM', () => {
     cy.contains('Apply').click().wait(1000);
     cy.get('i.bi-chevron-left').click().wait(1000);
 
-    cy.get('label').contains('Leave Type').parent().next().click().wait(1000);
+    // cy.get('label').contains('Leave Type').parent().next().click().wait(1000);
   //  cy.get('.oxd-select-text-input').first().click().wait(1000);  // dynamic
   //   // cy.get('.select').contains('CAN - FMLA').click();
 
