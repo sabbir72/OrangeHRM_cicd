@@ -2,16 +2,17 @@
   "name": "orangehrm",
   "version": "1.0.0",
   "main": "cypress.config.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "cypress run",
-    "cypress:report": "npx cypress run --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true",
+    "clean:reports": "rmdir /s /q cypress\\reports && mkdir cypress\\reports",
+    "cypress:run": "npx cypress run --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=false,json=true",
     "merge:reports": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/output.json",
-    "generate:html": "npx marge cypress/reports/output.json --reportDir cypress/reports/html"
+    "generate:html": "npx marge cypress/reports/output.json --reportDir cypress/reports/html",
+    "cypress:report": "npm run clean:reports && npm run cypress:run && npm run merge:reports && npm run generate:html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "description": "",
   "devDependencies": {
     "cypress": "^15.5.0",
