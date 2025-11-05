@@ -54,10 +54,10 @@ jobs:
           npm run merge:reports
           npm run generate:html
 
-            - name: Upload HTML report
-            if: always()
-            uses: actions/upload-artifact@v4
-            with:
-                name: cypress-html-report
-                path: cypress/reports/html/
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-html-report
+          path: cypress/reports/html/
                     

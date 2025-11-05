@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2025-11-05T04:20:58.399Z",
+    "end": "2025-11-05T04:21:41.857Z",
+    "duration": 43458,
+    "testsRegistered": 1,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "555ffa8d-b474-43fb-a345-d64df36b5ab5",
+      "title": "",
+      "fullFile": "cypress\\e2e\\ApplyForLeave.cy.js",
+      "file": "cypress\\e2e\\ApplyForLeave.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "0e5dfb3f-2038-48bc-a69a-fe46b8b23d62",
+          "title": "Apply Leave in OrangeHRM",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Logs in and applies for leave, retries if Failed to submit",
+              "fullTitle": "Apply Leave in OrangeHRM Logs in and applies for leave, retries if Failed to submit",
+              "timedOut": null,
+              "duration": 38816,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.loginToOrangeHRM();\ncy.contains('Leave').click().wait(1000);\ncy.contains('Apply').click().wait(1000);\ncy.get('i.bi-chevron-left').click().wait(1000);\ncy.get('label').contains('Leave Type').parent().next().click().wait(1000);\ncy.get('.oxd-select-text-input').first().click().wait(1000);\n// cy.get('.select').contains('CAN - FMLA').click();\nconst startDateInput = cy.get('input[placeholder=\"yyyy-dd-mm\"]').first().wait(1000);\nconst endDateInput = cy.get('input[placeholder=\"yyyy-dd-mm\"]').last().wait(1000);\nstartDateInput.clear().type('2025-11-10');\nendDateInput.clear().type('2025-11-12');\ncy.get('textarea').click({\n  force: true\n}).type('Need one day off for personal reason');\ncy.get('button[type=\"submit\"]').click();\ncy.contains(/Successfully Applied|Failed to submit/i, {\n  timeout: 10000\n}).then($msg => {\n  const text = $msg.text();\n  if (text.includes('Failed to submit')) {\n    cy.log('Submission failed, changing leave dates and retrying');\n    // Change leave dates\n    startDateInput.clear().type('2025-11-13');\n    endDateInput.clear().type('2025-11-14');\n    // Retry submit\n    cy.get('button[type=\"submit\"]').click();\n    // Final check for success\n    cy.contains('Successfully Applied', {\n      timeout: 10000\n    }).should('be.visible');\n  } else {\n    cy.log('Submission successful on first try');\n  }\n});",
+              "err": {
+                "message": "CypressError: Timed out retrying after 4050ms: `cy.click()` failed because it requires a DOM element, window or document.\n\nNo elements in the current DOM matched your query:\n\n  > cy.get(label).contains(Leave Type).parent().next()",
+                "estack": "CypressError: Timed out retrying after 4050ms: `cy.click()` failed because it requires a DOM element, window or document.\n\nNo elements in the current DOM matched your query:\n\n  > cy.get(label).contains(Leave Type).parent().next()\n    at isElement (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:152464:62)\n    at validateType (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:152322:14)\n    at Object.isType (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:152353:7)\n    at Array.<anonymous> (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:134908:22)\n    at $Cy.getSubjectFromChain (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:146082:34)\n    at Object.subjectFn (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:114331:51)\n    at retryActionability (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:115033:27)\n    at tryCatcher (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:4285:29)\n    at whenStable (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:151252:68)\n    at <unknown> (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:151193:14)\n    at tryCatcher (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:1671:18)\n    at Promise._fulfill (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:1615:18)\n    at <unknown> (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:5420:46)\nFrom Your Spec Code:\n    at Object.proxyGetter [as get] (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:80711:22)\n    at exists (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:150440:26)\n    at elExists (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:150455:10)\n    at ensureExistence (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:150636:22)\n    at onFailFn (https://opensource-demo.orangehrmlive.com/__cypress/runner/cypress_runner.js:150665:53)",
+                "diff": null
+              },
+              "uuid": "7158926c-976d-4a7f-b633-609d1af5a38f",
+              "parentUUID": "0e5dfb3f-2038-48bc-a69a-fe46b8b23d62",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "7158926c-976d-4a7f-b633-609d1af5a38f"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 38816,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.1"
+    }
+  }
+}
