@@ -1,0 +1,23 @@
+{
+  "name": "orangehrm",
+  "version": "1.0.0",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "cypress run",
+    "cypress:report": "npx cypress run --reporter mochawesome --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true",
+    "merge:reports": "npx mochawesome-merge cypress/reports/*.json > cypress/reports/output.json",
+    "generate:html": "npx marge cypress/reports/output.json --reportDir cypress/reports/html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^15.5.0",
+    "dotenv": "^17.2.3",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.0.0",
+    "mochawesome-report-generator": "^6.3.1"
+  }
+}

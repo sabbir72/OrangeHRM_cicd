@@ -1,0 +1,63 @@
+name: 🚦 Run Cypress Tests
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js Environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Step 3: Install Dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Verify Cypress Installation
+      - name: Verify Cypress cache
+        run: npx cypress verify
+
+      # Step 5: Run Cypress Tests in Headless Chrome
+      - name: Run Cypress tests
+        run: npx cypress run --browser chrome --headless
+
+      # Step 6: Save Cypress screenshots/videos for debugging (always upload, even if failed)
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-results
+          path: |
+            cypress/screenshots
+            cypress/videos
+            cypress/reports
+
+      # Step 7: Run Cypress with Mochawesome report
+      - name: Run Cypress with Mochawesome report
+        run: npm run cypress:report
+
+      - name: Merge and generate HTML report
+        if: always()
+        run: |
+          npm run merge:reports
+          npm run generate:html
+
+            - name: Upload HTML report
+            if: always()
+            uses: actions/upload-artifact@v4
+            with:
+                name: cypress-html-report
+                path: cypress/reports/html/
+                    
